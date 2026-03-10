@@ -2,1041 +2,306 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boot · Consultor empresarial</title>
-  <!-- Fuentes modernas (similares a la referencia) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
-  <!-- Font Awesome para iconos (gratuito) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* RESET Y VARIABLES */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #501ac8;
-      /* púrpura principal de la referencia */
-      --primary-light: #7a4bdd;
-      --secondary: #b366cf;
-      --accent: #d3a6ff;
-      --dark: #0c0c0c;
-      --dark-bg: #000000;
-      --card-bg: #111111;
-      --text-light: #e4e4e4;
-      --text-muted: #a0a0a0;
-      --border-color: #2a2a2a;
-      --gradient-1: linear-gradient(135deg, #501ac8 0%, #b366cf 100%);
-      --gradient-2: linear-gradient(90deg, rgba(80, 26, 200, 0.8) 0%, rgba(179, 102, 207, 0.8) 100%);
-      --font-primary: 'Plus Jakarta Sans', sans-serif;
-      --font-alt: 'Outfit', sans-serif;
-      --transition: all 0.3s ease;
-    }
-
-    body {
-      font-family: var(--font-primary);
-      background-color: var(--dark-bg);
-      color: var(--text-light);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    /* BOTONES */
-    .btn {
-      display: inline-block;
-      padding: 14px 32px;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: var(--transition);
-      cursor: pointer;
-      border: none;
-      font-family: var(--font-alt);
-      letter-spacing: 0.5px;
-    }
-
-    .btn-primary {
-      background: var(--gradient-1);
-      color: white;
-      box-shadow: 0 10px 20px -8px rgba(80, 26, 200, 0.5);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 25px -8px rgba(80, 26, 200, 0.7);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--primary);
-      color: white;
-    }
-
-    .btn-outline:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-    }
-
-    /* HEADER / NAVBAR */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--gradient-1);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1.5rem;
-      color: white;
-      transform: rotate(45deg);
-    }
-
-    .logo-icon span {
-      transform: rotate(-45deg);
-    }
-
-    .logo-text {
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
-    }
-
-    .nav-menu {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .nav-menu a {
-      font-weight: 500;
-      position: relative;
-      padding-bottom: 4px;
-    }
-
-    .nav-menu a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-1);
-      transition: width 0.3s;
-    }
-
-    .nav-menu a:hover::after,
-    .nav-menu a.active::after {
-      width: 100%;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 6px;
-    }
-
-    .hamburger span {
-      width: 28px;
-      height: 3px;
-      background: white;
-      border-radius: 3px;
-      transition: var(--transition);
-    }
-
-    /* HERO SECTION */
-    .hero {
-      padding: 4rem 0 5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -30%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(179, 102, 207, 0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: -1;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -20%;
-      left: -5%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(80, 26, 200, 0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: -1;
-    }
-
-    .hero-content {
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-    }
-
-    .hero-text {
-      flex: 1;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(179, 102, 207, 0.2);
-      color: var(--accent);
-      padding: 0.5rem 1.2rem;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(179, 102, 207, 0.3);
-    }
-
-    .hero-text h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 1.2rem;
-      font-family: var(--font-alt);
-    }
-
-    .hero-text h1 span {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-text p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      max-width: 550px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .hero-image {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .hero-image img {
-      max-width: 100%;
-      width: 400px;
-      border-radius: 20px;
-      box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.8);
-      border: 1px solid var(--border-color);
-    }
-
-    /* SECCIONES GENERALES */
-    .section {
-      padding: 5rem 0;
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 3rem;
-    }
-
-    .section-subtitle {
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      font-family: var(--font-alt);
-      margin-bottom: 1rem;
-    }
-
-    .section-title span {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .section-description {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-    }
-
-    /* SERVICIOS (cards) */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .service-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 2rem 1.5rem;
-      transition: var(--transition);
-      text-align: center;
-    }
-
-    .service-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--primary);
-      box-shadow: 0 20px 30px -15px rgba(80, 26, 200, 0.3);
-    }
-
-    .service-icon {
-      width: 70px;
-      height: 70px;
-      background: var(--gradient-1);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-      font-size: 2rem;
-      color: white;
-    }
-
-    .service-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .service-card p {
-      color: var(--text-muted);
-    }
-
-    /* PROCESO (pasos) */
-    .process-steps {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-    }
-
-    .step {
-      flex: 1 1 200px;
-      text-align: center;
-      position: relative;
-    }
-
-    .step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 40px;
-      right: -30px;
-      width: 60px;
-      height: 2px;
-      background: var(--border-color);
-      display: none;
-    }
-
-    @media (min-width: 768px) {
-      .step:not(:last-child)::after {
-        display: block;
-      }
-    }
-
-    .step-number {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: var(--gradient-1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0 auto 1.5rem;
-    }
-
-    .step h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .step p {
-      color: var(--text-muted);
-    }
-
-    /* BENEFICIOS (acordeón) */
-    .benefits-accordion {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .accordion-item {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-    }
-
-    .accordion-header {
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .accordion-header:hover {
-      background: #1a1a1a;
-    }
-
-    .accordion-header h3 {
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .accordion-header i {
-      color: var(--accent);
-    }
-
-    .accordion-toggle i {
-      transition: transform 0.3s;
-    }
-
-    .accordion-item.active .accordion-toggle i {
-      transform: rotate(45deg);
-    }
-
-    .accordion-content {
-      max-height: 0;
-      padding: 0 1.5rem;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s;
-      color: var(--text-muted);
-    }
-
-    .accordion-item.active .accordion-content {
-      max-height: 200px;
-      padding: 0 1.5rem 1.5rem;
-    }
-
-    /* PREGUNTAS FRECUENTES */
-    .faq-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .faq-item {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 1.8rem 1.5rem;
-    }
-
-    .faq-item h4 {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-    }
-
-    .faq-item h4 i {
-      color: var(--accent);
-    }
-
-    .faq-item p {
-      color: var(--text-muted);
-    }
-
-    /* CONTACTO */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .contact-info h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .contact-info p {
-      margin-bottom: 2rem;
-      color: var(--text-muted);
-    }
-
-    .contact-details li {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 1.2rem;
-    }
-
-    .contact-details i {
-      width: 40px;
-      height: 40px;
-      background: var(--gradient-1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .contact-form {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 30px;
-      border: 1px solid var(--border-color);
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 1rem 1.2rem;
-      background: #1e1e1e;
-      border: 1px solid var(--border-color);
-      border-radius: 40px;
-      color: white;
-      font-family: inherit;
-      transition: var(--transition);
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    .form-group textarea {
-      border-radius: 25px;
-      resize: vertical;
-    }
-
-    /* FOOTER */
-    .footer {
-      background: #0a0a0a;
-      border-top: 1px solid var(--border-color);
-      padding: 2rem 0;
-      text-align: center;
-    }
-
-    .footer-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .footer-logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent);
-    }
-
-    .footer-copy {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 992px) {
-      .hero-content {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .hero-text p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-buttons {
-        justify-content: center;
-      }
-
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hamburger {
-        display: flex;
-      }
-
-      .nav-menu {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background: rgba(0, 0, 0, 0.98);
-        backdrop-filter: blur(10px);
-        flex-direction: column;
-        justify-content: center;
-        transition: left 0.3s;
-        gap: 2rem;
-      }
-
-      .nav-menu.active {
-        left: 0;
-      }
-
-      .nav-menu a {
-        font-size: 1.3rem;
-      }
-
-      .hero-text h1 {
-        font-size: 2.5rem;
-      }
-
-      .section-title {
-        font-size: 2rem;
-      }
-
-      .process-steps {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .step:not(:last-child)::after {
-        display: none;
-      }
-    }
-
-    /* UTILIDADES */
-    .text-gradient {
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adriana Gualdron | Portafolio Tecnológico</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-  <header class="header">
-    <div class="container">
-      <nav class="navbar">
-        <div class="logo">
-          <div class="logo-icon"><span>B</span></div>
-          <span class="logo-text">boot</span>
+<body id="inicio">
+    <!-- Network Canvas Background -->
+    <canvas id="bg-canvas" class="no-print"></canvas>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot no-print"></div>
+    <div class="cursor-outline no-print"></div>
+
+    <!-- Menú de Navegación -->
+    <header class="header no-print">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="#inicio" class="magnetic-item">AG.</a>
+            </div>
+
+            <!-- Hamburger Menu Button -->
+            <button class="mobile-menu-btn magnetic-item" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#inicio" class="nav-link magnetic-item">Inicio</a></li>
+                    <li><a href="#presentacion" class="nav-link magnetic-item">Presentación</a></li>
+                    <li><a href="#skills" class="nav-link magnetic-item">Skills</a></li>
+                    <li><a href="#estadisticas" class="nav-link magnetic-item">Impacto</a></li>
+                    <li><a href="#experiencia" class="nav-link magnetic-item">Experiencia</a></li>
+                    <li><a href="#contacto" class="nav-link magnetic-item">Contacto</a></li>
+                </ul>
+            </nav>
         </div>
-        <ul class="nav-menu" id="navMenu">
-          <li><a href="#hero" class="active">Inicio</a></li>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#proceso">Proceso</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-          <li><a href="#contacto" class="btn btn-outline">Agendar cita</a></li>
-        </ul>
-        <div class="hamburger" id="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </nav>
+    </header>
+
+    <div id="portfolio-content">
+        <!-- Presentación (Hero) -->
+        <section id="presentacion" class="section first-section">
+            <div class="hero-bg-shapes no-print">
+                <div class="hero-shape-1"></div>
+                <div class="hero-shape-2"></div>
+            </div>
+            <div class="container hero-container animate-on-scroll">
+                <div class="hero-text">
+                    <span class="greeting">Hola, soy</span>
+                    <h1 class="name cinematic-text">Adriana Gualdron</h1>
+                    <h2 class="role">Diseñadora Web y Especialista en Mantenimiento de Computadores</h2>
+                    <p class="bio">Con más de 20 años de experiencia en diseño de páginas web y mantenimiento de
+                        computadores, he ayudado a decenas de empresas a establecer su presencia digital y mantener sus
+                        equipos en óptimo funcionamiento. Me apasiona crear soluciones funcionales y atractivas que
+                        combinan creatividad y tecnología.</p>
+                    <div class="hero-buttons no-print">
+                        <a href="#contacto" class="btn btn-primary holo-btn magnetic-item">Contáctame <i
+                                class="fas fa-paper-plane"></i></a>
+                        <button class="btn btn-secondary pdf-download magnetic-item"><i class="fas fa-file-pdf"></i>
+                            Descargar Portafolio en PDF</button>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <div class="hero-image 3d-card tilt-element">
+                        <div class="image-inner">
+                            <img src="https://res.cloudinary.com/dl7ushsw1/image/upload/v1772844009/foto_w1umbu.png"
+                                alt="Foto de perfil de Adriana Gualdron" class="profile-photo">
+                        </div>
+                    </div>
+                    <div class="decorator dec-1"></div>
+                    <div class="decorator dec-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Técnicos -->
+        <section id="skills" class="section bg-glass">
+            <div class="container animate-on-scroll">
+                <h2 class="section-title">Mis Skills Técnicos</h2>
+                <div class="skills-grid">
+                    <!-- Lenguajes -->
+                    <div class="skill-category card 3d-card tilt-element">
+                        <h3><i class="fas fa-code"></i> Lenguajes</h3>
+                        <ul class="skill-list">
+                            <li><i class="fab fa-php skill-icon"></i> PHP</li>
+                            <li><i class="fas fa-database skill-icon"></i> MySQL</li>
+                            <li><i class="fab fa-html5 skill-icon"></i> HTML</li>
+                            <li><i class="fab fa-css3-alt skill-icon"></i> CSS</li>
+                        </ul>
+                    </div>
+                    <!-- Frameworks & CMS -->
+                    <div class="skill-category card 3d-card tilt-element">
+                        <h3><i class="fas fa-layer-group"></i> Frameworks</h3>
+                        <ul class="skill-list">
+                            <li><i class="fab fa-wordpress skill-icon"></i> WordPress</li>
+                            <li><i class="fab fa-bootstrap skill-icon"></i> Bootstrap</li>
+                        </ul>
+                    </div>
+                    <!-- Herramientas -->
+                    <div class="skill-category card 3d-card tilt-element">
+                        <h3><i class="fas fa-tools"></i> Herramientas</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-image skill-icon"></i> Photoshop</li>
+                            <li><i class="fab fa-git-alt skill-icon"></i> Git</li>
+                            <li><i class="fab fa-docker skill-icon"></i> Docker</li>
+                            <li><i class="fas fa-code-branch skill-icon"></i> VS Code</li>
+                            <li><i class="fab fa-trello skill-icon"></i> Trello</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estadísticas Animadas -->
+        <section id="estadisticas" class="section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card card 3d-card tilt-element animate-on-scroll">
+                        <div class="stat-number"><span class="counter" data-target="20">0</span>+</div>
+                        <p class="stat-text">años de experiencia</p>
+                    </div>
+                    <div class="stat-card card 3d-card tilt-element animate-on-scroll">
+                        <div class="stat-number"><span class="counter" data-target="100">0</span>+</div>
+                        <p class="stat-text">proyectos desarrollados</p>
+                    </div>
+                    <div class="stat-card card 3d-card tilt-element animate-on-scroll">
+                        <div class="stat-number"><span class="counter" data-target="50">0</span>+</div>
+                        <p class="stat-text">empresas asesoradas</p>
+                    </div>
+                    <div class="stat-card card 3d-card tilt-element animate-on-scroll">
+                        <div class="stat-number"><span class="counter" data-target="500">0</span>+</div>
+                        <p class="stat-text">usuarios en e-learning</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experiencia y Proyectos -->
+        <section id="experiencia" class="section bg-glass">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Experiencia y Proyectos</h2>
+
+                <div class="projects-grid">
+                    <!-- Proyecto 1 -->
+                    <div class="project-card card 3d-card tilt-element animate-on-scroll">
+                        <div class="project-img">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Plataforma E-learning</h3>
+                            <p class="project-desc">Sistema LMS con PHP y MySQL para más de 500 estudiantes.</p>
+                        </div>
+                    </div>
+                    <!-- Proyecto 2 -->
+                    <div class="project-card card 3d-card tilt-element animate-on-scroll">
+                        <div class="project-img">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Tienda Online de Accesorios</h3>
+                            <p class="project-desc">Ecommerce completo con pagos y panel administrativo.</p>
+                        </div>
+                    </div>
+                    <!-- Proyecto 3 -->
+                    <div class="project-card card 3d-card tilt-element animate-on-scroll">
+                        <div class="project-img">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Aplicativos PHP a medida</h3>
+                            <p class="project-desc">Sistemas personalizados para inventarios y gestión empresarial.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline de Experiencia Animado -->
+                <div class="timeline-container no-print">
+                    <h3 class="timeline-title animate-on-scroll">Evolución Profesional</h3>
+                    <div class="timeline">
+                        <div class="timeline-item animate-on-scroll">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content card 3d-card tilt-element">
+                                <h4>Inicio carrera en desarrollo web</h4>
+                            </div>
+                        </div>
+                        <div class="timeline-item animate-on-scroll">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content card 3d-card tilt-element">
+                                <h4>Creación de plataformas e-learning</h4>
+                            </div>
+                        </div>
+                        <div class="timeline-item animate-on-scroll">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content card 3d-card tilt-element">
+                                <h4>Desarrollo de aplicaciones empresariales</h4>
+                            </div>
+                        </div>
+                        <div class="timeline-item animate-on-scroll">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content card 3d-card tilt-element">
+                                <h4>Expansión a consultoría tecnológica</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline version for PDF (Simplified linear list) -->
+                <div class="pdf-only-timeline" style="display: none;">
+                    <h3>Evolución Profesional</h3>
+                    <ul>
+                        <li>Inicio carrera en desarrollo web</li>
+                        <li>Creación de plataformas e-learning</li>
+                        <li>Desarrollo de aplicaciones empresariales</li>
+                        <li>Expansión a consultoría tecnológica</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contacto" class="section">
+            <div class="container animate-on-scroll">
+                <h2 class="section-title">Contacto</h2>
+                <div class="contact-wrapper">
+                    <div class="contact-form-container card 3d-card tilt-element no-print">
+                        <h3>Envíame un mensaje</h3>
+                        <form class="contact-form"
+                            onsubmit="event.preventDefault(); alert('¡Mensaje enviado correctamente (simulación)!');">
+                            <div class="form-group">
+                                <label for="name">Nombre</label>
+                                <input type="text" id="name" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="Tu correo electrónico" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Mensaje</label>
+                                <textarea id="message" rows="5" placeholder="¿En qué puedo ayudarte?"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary holo-btn submit-btn magnetic-item">Enviar
+                                Mensaje <i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Conecta Conmigo</h3>
+                        <p>Estoy disponible para nuevos proyectos y mantener tus equipos funcionando de forma óptima.
+                            Contáctame a través de mis redes:</p>
+
+                        <div class="social-links no-print">
+                            <a href="#" class="social-link magnetic-item" title="Facebook"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link magnetic-item" title="LinkedIn"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link magnetic-item" title="Instagram"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link magnetic-item" title="YouTube"><i
+                                    class="fab fa-youtube"></i></a>
+                            <a href="#" class="social-link magnetic-item" title="GitHub"><i
+                                    class="fab fa-github"></i></a>
+                        </div>
+                        <div class="direct-contact">
+                            <p><i class="fas fa-envelope"></i> adrigr79@gmail.com</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Colombia</p>
+                            <p class="no-print"><a href="https://github.com/logilionTech" target="_blank"
+                                    class="magnetic-item"><i class="fab fa-github"></i> github.com/logilion</a></p>
+
+                            <!-- PDF Button also down here for convenience -->
+                            <button class="btn btn-primary holo-btn pdf-download magnetic-item mt-20 no-print"
+                                style="margin-top:20px; font-size: 0.9rem; padding: 10px 20px;">
+                                <i class="fas fa-file-pdf"></i> Descargar Portafolio
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </header>
 
-  <main>
-    <!-- HERO SECTION con Talento Tech Oriente y logo empresarial -->
-    <section id="hero" class="hero">
-      <div class="container hero-content">
-        <div class="hero-text">
-          <span class="hero-badge"><i class="fas fa-rocket"></i> Transformación digital</span>
-          <h1>
-            <span>talento tech oriente</span><br>
-            Impulsa tu negocio con <span class="text-gradient">boot</span>
-          </h1>
-          <p>Consultoría empresarial de alto impacto. Acompañamiento estratégico para llevar tu empresa al siguiente
-            nivel con tecnología e innovación.</p>
-          <div class="hero-buttons">
-            <a href="#contacto" class="btn btn-primary">Empieza ahora</a>
-            <a href="#servicios" class="btn btn-outline">Descubrir más</a>
-          </div>
+    <footer class="footer no-print">
+        <div class="container">
+            <p>&copy; 2026 Adriana Gualdron. Todos los derechos reservados.</p>
         </div>
-        <div class="hero-image">
-          <!-- Logo empresarial (simulado) -->
-          <div
-            style="background: linear-gradient(145deg, #1a1a1a, #0a0a0a); padding: 2rem; border-radius: 40px; border: 1px solid #333;">
-            <div style="display: flex; align-items: center; gap: 20px;">
-              <div
-                style="width: 80px; height: 80px; background: var(--gradient-1); border-radius: 25px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; transform: rotate(10deg);">
-                ⚡</div>
-              <div>
-                <div style="font-size: 2rem; font-weight: 800; line-height: 1.2;">boot</div>
-                <div style="color: var(--accent); letter-spacing: 2px;">CONSULTORÍA</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    </footer>
 
-    <!-- SERVICIOS -->
-    <section id="servicios" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-subtitle">lo que hacemos</div>
-          <h2 class="section-title">Soluciones <span>estratégicas</span> para tu empresa</h2>
-          <p class="section-description">Diseñamos rutas personalizadas para optimizar procesos, mejorar la
-            productividad y acelerar la transformación digital.</p>
-        </div>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-            <h3>Estrategia digital</h3>
-            <p>Diagnóstico y hoja de ruta para digitalizar tu negocio con foco en resultados.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-users-cog"></i></div>
-            <h3>Capacitación Tech</h3>
-            <p>Bootcamps a medida en habilidades digitales para equipos de alto rendimiento.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-project-diagram"></i></div>
-            <h3>Gestión del cambio</h3>
-            <p>Acompañamiento cultural y metodologías ágiles para adoptar innovación.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
-            <h3>Ciberseguridad</h3>
-            <p>Protección de activos digitales y cumplimiento normativo para tu empresa.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESO DE TRABAJO -->
-    <section id="proceso" class="section" style="background: rgba(80,26,200,0.02);">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-subtitle">metodología</div>
-          <h2 class="section-title">Cómo <span>trabajamos</span></h2>
-          <p class="section-description">Un proceso claro, ágil y colaborativo para asegurar resultados.</p>
-        </div>
-        <div class="process-steps">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Diagnóstico</h3>
-            <p>Analizamos tu negocio, procesos y oportunidades de mejora.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>Estrategia</h3>
-            <p>Diseñamos un plan a medida con objetivos claros.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>Implementación</h3>
-            <p>Acompañamos la ejecución con metodologías ágiles.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <h3>Optimización</h3>
-            <p>Medimos resultados y ajustamos para mejorar continuamente.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BENEFICIOS (acordeón) -->
-    <section id="beneficios" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-subtitle">ventajas</div>
-          <h2 class="section-title">Beneficios de trabajar con <span>boot</span></h2>
-        </div>
-        <div class="benefits-accordion" id="accordion">
-          <div class="accordion-item active">
-            <div class="accordion-header">
-              <h3><i class="fas fa-bolt"></i> Metodología probada</h3>
-              <span class="accordion-toggle"><i class="fas fa-plus"></i></span>
-            </div>
-            <div class="accordion-content">
-              <p>Más de 50 empresas han transformado su gestión con nuestros programas. Enfoque práctico y orientado a
-                resultados.</p>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><i class="fas fa-users"></i> Equipo multidisciplinario</h3>
-              <span class="accordion-toggle"><i class="fas fa-plus"></i></span>
-            </div>
-            <div class="accordion-content">
-              <p>Contamos con expertos en tecnología, negocios, marketing y recursos humanos para cubrir todas las
-                áreas.</p>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <h3><i class="fas fa-clock"></i> Acompañamiento continuo</h3>
-              <span class="accordion-toggle"><i class="fas fa-plus"></i></span>
-            </div>
-            <div class="accordion-content">
-              <p>No te dejamos solo después de la asesoría. Mantenemos seguimiento y sesiones de ajuste durante 6 meses.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PREGUNTAS FRECUENTES -->
-    <section id="faq" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-subtitle">preguntas frecuentes</div>
-          <h2 class="section-title">Resolvemos tus <span>dudas</span></h2>
-        </div>
-        <div class="faq-grid">
-          <div class="faq-item">
-            <h4><i class="fas fa-question-circle"></i> ¿Qué es talento tech oriente?</h4>
-            <p>Es nuestra iniciativa para impulsar el talento digital en la región, conectando profesionales con
-              empresas innovadoras.</p>
-          </div>
-          <div class="faq-item">
-            <h4><i class="fas fa-clock"></i> ¿Cuánto dura un proceso típico?</h4>
-            <p>Depende del alcance, pero nuestros proyectos suelen durar entre 3 y 6 meses, con hitos quincenales.</p>
-          </div>
-          <div class="faq-item">
-            <h4><i class="fas fa-dollar-sign"></i> ¿Trabajan con pymes?</h4>
-            <p>Por supuesto. Adaptamos nuestras soluciones a empresas de todos los tamaños, con especial foco en pymes.
-            </p>
-          </div>
-          <div class="faq-item">
-            <h4><i class="fas fa-file-alt"></i> ¿Ofrecen certificaciones?</h4>
-            <p>Sí, al finalizar cada bootcamp o proceso de asesoría extendida entregamos certificado de participación.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACTO -->
-    <section id="contacto" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-subtitle">contacto</div>
-          <h2 class="section-title">Hablemos de tu <span>proyecto</span></h2>
-        </div>
-        <div class="contact-grid">
-          <div class="contact-info">
-            <h3>Agenda una consultoría gratuita</h3>
-            <p>Cuéntanos tu reto y te ofreceremos una sesión estratégica sin compromiso.</p>
-            <ul class="contact-details">
-              <li><i class="fas fa-phone-alt"></i> +57 601 234 5678</li>
-              <li><i class="fas fa-envelope"></i> hola@bootconsulting.co</li>
-              <li><i class="fas fa-map-marker-alt"></i> Cúcuta, Norte de Santander</li>
-            </ul>
-          </div>
-          <div class="contact-form">
-            <form id="contactForm" action="https://formspree.io/f/xwvrlebl" method="POST">
-              <div class="form-group">
-                <input type="text" name="nombre" placeholder="Nombre completo" required>
-              </div>
-              <div class="form-group">
-                <input type="email" name="email" placeholder="Correo electrónico" required>
-              </div>
-              <div class="form-group">
-                <input type="text" name="empresa" placeholder="Empresa">
-              </div>
-              <div class="form-group">
-                <textarea rows="4" name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar mensaje</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-content">
-      <div class="footer-logo">boot</div>
-      <div class="footer-links">
-        <a href="#hero">Inicio</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#proceso">Proceso</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-      <div class="footer-copy">
-        &copy; 2025 boot consultoría. Todos los derechos reservados.
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Menú móvil
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
-
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      hamburger.classList.toggle('active');
-    });
-
-    // Cerrar menú al hacer clic en un enlace
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-      });
-    });
-
-    // Acordeón de beneficios
-    const accordionItems = document.querySelectorAll('.accordion-item');
-
-    accordionItems.forEach(item => {
-      const header = item.querySelector('.accordion-header');
-      header.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        // Cerrar todos
-        accordionItems.forEach(i => i.classList.remove('active'));
-        if (!isActive) {
-          item.classList.add('active');
-        }
-      });
-    });
-
-    // Smooth scroll para enlaces internos
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // Envío del formulario con Formspree
-    const contactForm = document.getElementById('contactForm');
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const formData = new FormData(contactForm);
-      try {
-        const response = await fetch(contactForm.action, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          alert('Gracias por contactarnos. Pronto recibirás una respuesta.');
-          contactForm.reset();
-        } else {
-          alert('Oops! Hubo un problema al enviar tu formulario.');
-        }
-      } catch (error) {
-        alert('Oops! Hubo un problema al enviar tu formulario.');
-      }
-    });
-
-    // Resaltar enlace activo según scroll (simple)
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('section[id]');
-      const scrollY = window.scrollY;
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        const link = document.querySelector(`.nav-menu a[href="#${section.id}"]`);
-        if (link && scrollY >= sectionTop && scrollY < sectionBottom) {
-          document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
-          link.classList.add('active');
-        }
-      });
-    });
-  </script>
-  <script>
-    (function () { if (!window.chatbase || window.chatbase("getState") !== "initialized") { window.chatbase = (...arguments) => { if (!window.chatbase.q) { window.chatbase.q = [] } window.chatbase.q.push(arguments) }; window.chatbase = new Proxy(window.chatbase, { get(target, prop) { if (prop === "q") { return target.q } return (...args) => target(prop, ...args) } }) } const onLoad = function () { const script = document.createElement("script"); script.src = "https://www.chatbase.co/embed.min.js"; script.id = "Er4WfNALkXTCQieSfTDko"; script.domain = "www.chatbase.co"; document.body.appendChild(script) }; if (document.readyState === "complete") { onLoad() } else { window.addEventListener("load", onLoad) } })();
-  </script>
+    <!-- html2pdf.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
